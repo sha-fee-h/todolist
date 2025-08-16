@@ -13,10 +13,10 @@ body {
 
 .hero {
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
   background: #000;
   position: relative;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .hero::after {
@@ -245,4 +245,10 @@ body {
 .modal button:last-of-type:hover {
   background: #1f8c4d;
   transform: scale(1.05);
+}
+
+@media (max-width: 500px) {
+  .modal {
+    width: 350px;
+  }
 }

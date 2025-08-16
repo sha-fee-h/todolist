@@ -6,7 +6,7 @@ A simple and intuitive ToDo List application to help you **organize tasks, incre
 
 ## ✨ Features
 
-- Add and delete tasks
+- Add , edit and delete tasks
 - Mark tasks as complete/incomplete
 - Filter tasks by status (backlog, active, done, deleted)
 - Responsive design for mobile and desktop

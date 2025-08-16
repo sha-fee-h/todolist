@@ -1,7 +1,9 @@
 import React,{ useEffect, useState } from "react"
 import Column from "./Column"
 
+
 function ToDoList() {
+
     
     const [tasks, setTasks] = useState(() => {
         try {
@@ -53,7 +55,12 @@ function ToDoList() {
         setTaskName(e.target.value)
     }
 
+    function handleEdit(name,index){
+        setTasks(t=>t.map(task=>(task.id===index?{...task,taskName:name}:task)))
+    }
+
     return (
+        <div className="hero" >
         <div className="todo-app">
             <header className="header">
                 <h1 className="title">ToDos</h1>
@@ -64,14 +71,15 @@ function ToDoList() {
                 
                 <button onClick={handleAddTask}>add task</button>
             </div>
-            {msg && <p style={{color:'red', display:'block'}}>{msg}</p>}
+            {msg && <p style={{color:'#6c1111ff', display:'block'}}>{msg}</p>}
 
             <div className="columns">
-                <Column column='Backlog' tasks={tasks} onStatusChange={handleTaskStatus}/>
-                <Column column='Active' tasks={tasks} onStatusChange={handleTaskStatus}/>
-                <Column column='Done' tasks={tasks} onStatusChange={handleTaskStatus}/>
-                <Column column='Removed' tasks={tasks} onStatusChange={handleTaskStatus}/>
+                <Column column='Backlog' tasks={tasks} onStatusChange={handleTaskStatus} onEdit={handleEdit}/>
+                <Column column='Active' tasks={tasks} onStatusChange={handleTaskStatus} onEdit={handleEdit}/>
+                <Column column='Done' tasks={tasks} onStatusChange={handleTaskStatus} onEdit={handleEdit}/>
+                <Column column='Removed' tasks={tasks} onStatusChange={handleTaskStatus} onEdit={handleEdit}/>
             </div>
+        </div>
         </div>
     )
 }

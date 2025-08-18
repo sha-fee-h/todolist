@@ -146,15 +146,20 @@ body {
 }
 .task-actions button {
   padding: 4px 8px;
-  background: #932b29;
   border: none;
   border-radius: 4px;
   color: white;
   cursor: pointer;
 }
 .task-actions button:hover {
-  background: #311818;
   content: 'delete';
+}
+.delete-btn {
+  background: #932b29;
+}
+
+.delete-btn:hover {
+  background: #311818;
 }
 
 .empty-task {
@@ -193,6 +198,10 @@ body {
   position: relative;
 }
 
+.modal-name {
+  margin: 0 0 12px 0;
+}
+
 /* Pop-up animation */
 @keyframes modalPop {
   0% {
@@ -211,12 +220,15 @@ body {
   padding: 10px;
   border-radius: 8px;
   border: none;
-  margin: 12px 0;
+  margin: 12px 0 0 0;
   background: #1e1e1e;
   color: #fff;
   font-size: 1rem;
   outline: none;
 }
+
+
+
 
 /* Modal Buttons */
 .modal button {
@@ -228,23 +240,54 @@ body {
   cursor: pointer;
   transition: all 0.25s ease;
 }
-
-.modal button:first-of-type {
-  background: #e74c3c;
-  color: white;
-}
-.modal button:first-of-type:hover {
-  background: #c0392b;
+.modal button:hover {
   transform: scale(1.05);
+  background: rgba(71, 14, 71, 0.867)fd;
+
 }
 
-.modal button:last-of-type {
+.close-button {
+  background: transparent;
+  color: white;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+.close-button:hover {
+  background: rgba(71, 14, 71, 0.867)fd;
+}
+
+
+
+.task-edit {
+  display: flex;
+  align-items: center;
+  gap: 8px; 
+}
+
+.task-edit input {
+  flex: 1;             
+  margin: 0;
+}
+
+.task-save-btn {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 8px;
   background: #27ae60;
   color: white;
+  cursor: pointer;
+  transition: all 0.25s ease;
 }
-.modal button:last-of-type:hover {
+
+.task-save-btn:hover {
   background: #1f8c4d;
   transform: scale(1.05);
+}
+
+.error-msg {
+  color: #de3a3aff;
+  margin: 12px 0 0 0;
 }
 
 @media (max-width: 500px) {

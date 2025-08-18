@@ -9,21 +9,29 @@ function Column(props) {
 
 
     const tasksFortheColumn = props.tasks.filter(task => task.taskStatus === props.column && task.taskStatus !== 'Deleted');
-    // console.log(tasksFortheColumn)
-    function handleCheckBox(index, e) {
+    console.log(props.tasks)
+    function handleCheckBox(index, e, status, prevStatus) {
         if (e.target.checked) {
 
-            props.onStatusChange(index, 'Done')
-            e.target.checked = false
+            props.onStatusChange(index, 'Done', status)
+
         }
+        else {
+            props.onStatusChange(index, prevStatus === 'Removed' ? 'Active' : prevStatus, status)
+        }
+
     }
 
     function handleDelete(id, status) {
         if (status === 'Removed') {
-            props.onStatusChange(id, 'Deleted');
+            props.onStatusChange(id, 'Deleted', status);
             return;
         }
-        props.onStatusChange(id, 'Removed')
+        props.onStatusChange(id, 'Removed', status)
+    }
+
+    function handleUndo(id, status, prevStatus) {
+        props.onStatusChange(id, prevStatus, status)
     }
 
     function handleEdit(task) {
@@ -32,7 +40,7 @@ function Column(props) {
     }
 
     function handleClick(id) {
-        if(!taskName.trim()){
+        if (!taskName.trim()) {
             setMsg('task should no be empty');
             return
         }
@@ -66,22 +74,34 @@ function Column(props) {
                         </div>
 
                         <div className="task-actions">
-                            {props.column === ('Active' || 'Backlog') && <input type="checkbox" onChange={(e) => handleCheckBox(task.id, e)} />}
+                            {['Active', 'Backlog', 'Done'].includes(props.column) ? <input type="checkbox" checked={task.taskStatus === 'Done'} onChange={(e) => handleCheckBox(task.id, e, task.taskStatus, task.prevStatus)} /> : null}
+
+                            {props.column === 'Removed' && <button onClick={() => handleUndo(task.id, task.taskStatus, task.prevStatus)} style={{ backgroundColor: 'transparent' }}>↺</button>}
+
                             <button onClick={() => handleEdit(task.taskName)} style={{ backgroundColor: 'transparent' }}>✏️</button>
 
                             {modal && (
                                 <div className="modal-overlay">
                                     <div className="modal">
-                                        <button onClick={() => setModal(false)}>✗</button>
-                                        <input required value={taskName} onChange={e => setTaskName(e.target.value)} />
-                                        {msg && <p style={{color:"#de3a3aff"}}>{msg}</p>}
-                                        <button onClick={() => handleClick(task.id)}>✓</button>
+                                        <div className="modal-name">Edit Task</div>
+                                        <button className="close-button" onClick={() => setModal(false)}>✖</button>
+                                        <div className="task-edit">
+                                            <input
+                                                required
+                                                value={taskName}
+                                                onChange={e => setTaskName(e.target.value)}
+                                            />
+                                            <button className="task-save-btn" onClick={() => handleClick(task.id)}>✓</button>
+                                        </div>
+
+                                        {msg && <p className="error-msg">{msg}</p>}
+
                                     </div>
                                 </div>
                             )}
 
 
-                            <button onClick={() => handleDelete(task.id, task.taskStatus)}>🗑</button>
+                            <button className="delete-btn" onClick={() => handleDelete(task.id, task.taskStatus)}>🗑</button>
                         </div>
                     </li>
                 )

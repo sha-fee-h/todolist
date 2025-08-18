@@ -30,20 +30,21 @@ function ToDoList() {
         const newTask = {
             id:Date.now(),
             taskName,
-            taskStatus:'Active',
-            taskDate: new Date().toISOString().slice(0, 10) 
+            taskStatus:'Backlog',
+            prevStatus:null,
+            taskDate: new Date().toISOString().slice(0, 10)
         };
         setTasks(t=>[...t, newTask]);
         setTaskName('');
     }
 
-    function handleTaskStatus(index,status){
-        setTasks(t=>t.map((task)=>(task.id===index?{...task,taskStatus:status}:task)))
+    function handleTaskStatus(index, status, prevStatus){
+        setTasks(t=>t.map((task)=>(task.id===index?{...task,taskStatus:status,...{prevStatus}}:task)))
     }
 
     useEffect(()=>{
         const today = new Date().toISOString().slice(0,10);
-        setTasks(t=>t.map(task=>task.taskStatus==='Active' && task.taskDate<today ? {...task,taskStatus:'Backlog'}:task))
+        setTasks(t=>t.filter(task=>task.taskStatus!=='Deleted').map(task=>task.taskStatus==='Active' && task.taskDate<today ? {...task,taskStatus:'Backlog'}:task))
     },[])
 
     useEffect(() => {

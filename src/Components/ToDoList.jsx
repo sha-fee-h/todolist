@@ -30,7 +30,7 @@ function ToDoList() {
         const newTask = {
             id:Date.now(),
             taskName,
-            taskStatus:'Backlog',
+            taskStatus:'Active',
             prevStatus:null,
             taskDate: new Date().toISOString().slice(0, 10)
         };
